@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { useState } from 'react';
+import AddCountries from './AddCountries';
+
+function getCountry()
+{
+  const country=['spain','turkey','norway','england','france']
+ return country[Math.floor(Math.random()*country.length)]
+}
+
 
 function App() {
+  const [countries,setCountries]=useState([])
+  
+  const getCountries=()=>
+  {
+    setCountries([...countries,getCountry()])
+  }
+   // it allowed us to write the countries names we added one under the other instead of side by side
+    const rerenderCountry=countries.map((country,index)=>{
+        return <AddCountries type={country} key={index}/>
+     
+    })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div  >
+      <button onClick={getCountries}> Add country</button>
+      <div> {rerenderCountry}</div>
     </div>
   );
 }
